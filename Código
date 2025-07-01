@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone 15 Python</title>
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f7;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .iphone-15 {
+            width: 390px;
+            height: 844px;
+            background-color: #000;
+            border-radius: 50px;
+            padding: 15px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.3);
+        }
+        
+        .screen {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            background-image: url('https://wallpapers.com/images/hd/programming-iphone-python-logo-dk813wgfq2bruubn.jpg');
+            background-size: 500px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #3776ab; /* Azul Python */
+        }
+        
+        .screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 25px 0;
+            color: white;
+            font-size: 14px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .time {
+            font-weight: 600;
+        }
+        
+        .status-icons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .dynamic-island {
+            width: 120px;
+            height: 35px;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 20px;
+            margin: 0 auto;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .home-screen {
+            padding: 70px 20px 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+            height: calc(100% - 120px);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .app-icon:hover {
+            transform: scale(1.08);
+        }
+        
+        .app-icon:active {
+            transform: scale(0.92);
+        }
+        
+        .icon {
+            width: 62px;
+            height: 62px;
+            background-color: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            animation: float 5s infinite ease-in-out;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(182, 153, 153, 0.1);
+        }
+        
+        .icon:hover {
+            background-color: rgba(255,255,255,0.25);
+        }
+        
+        /* Animações individuais para cada ícone */
+        .app-icon:nth-child(1) .icon { animation-delay: 0s; }
+        .app-icon:nth-child(2) .icon { animation-delay: 0.5s; }
+        .app-icon:nth-child(3) .icon { animation-delay: 1s; }
+        .app-icon:nth-child(4) .icon { animation-delay: 1.5s; }
+        .app-icon:nth-child(5) .icon { animation-delay: 0.2s; }
+        .app-icon:nth-child(6) .icon { animation-delay: 0.7s; }
+        .app-icon:nth-child(7) .icon { animation-delay: 1.2s; }
+        .app-icon:nth-child(8) .icon { animation-delay: 1.7s; }
+        .app-icon:nth-child(9) .icon { animation-delay: 0.4s; }
+        .app-icon:nth-child(10) .icon { animation-delay: 0.9s; }
+        .app-icon:nth-child(11) .icon { animation-delay: 1.4s; }
+        .app-icon:nth-child(12) .icon { animation-delay: 1.9s; }
+        
+        .dock {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            right: 25px;
+            background-color: rgba(255,255,255,0.15);
+            border-radius: 28px;
+            padding: 14px;
+            display: flex;
+            justify-content: space-around;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 2;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .dock .icon {
+            animation: none;
+            width: 58px;
+            height: 58px;
+        }
+        
+        .dock .icon:hover {
+            animation: pulse 1s infinite;
+        }
+        
+        .app-name {
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        .wallpaper-credit {
+            position: absolute;
+            bottom: 85px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 10px;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-15">
+        <div class="screen">
+            <div class="dynamic-island"></div>
+            <div class="status-bar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <span>5G</span>
+                    <span>📶</span>
+                    <span>100%</span>
+                </div>
+            </div>
+            
+            <div class="home-screen">
+                <!-- Linha 1 -->
+                <a href="#" class="app-icon">
+                    <div class="icon">📱</div>
+                    <span class="app-name">Phone</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">✉️</div>
+                    <span class="app-name">Messages</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">📷</div>
+                    <span class="app-name">Camera</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">🖼️</div>
+                    <span class="app-name">Photos</span>
+                </a>
+                
+                <!-- Linha 2 -->
+                <a href="#" class="app-icon">
+                    <div class="icon">🗓️</div>
+                    <span class="app-name">Calendar</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">⏰</div>
+                    <span class="app-name">Clock</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">🗺️</div>
+                    <span class="app-name">Maps</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">⛅</div>
+                    <span class="app-name">Weather</span>
+                </a>
+                
+                <!-- Linha 3 -->
+                <a href="#" class="app-icon">
+                    <div class="icon">📝</div>
+                    <span class="app-name">Notes</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">🎵</div>
+                    <span class="app-name">Music</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">🎮</div>
+                    <span class="app-name">Arcade</span>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">🛒</div>
+                    <span class="app-name">App Store</span>
+                </a>
+            </div>
+            
+            <div class="dock">
+                <a href="#" class="app-icon">
+                    <div class="icon">📞</div>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">✉️</div>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">🌐</div>
+                </a>
+                <a href="#" class="app-icon">
+                    <div class="icon">📷</div>
+                </a>
+            </div>
+            
+            <div class="wallpaper-credit">Python Powered Wallpaper</div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.app-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Efeito de clique
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.1)';
+                }, 100);
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+                
+                // Efeito no Dynamic Island
+                const appName = this.querySelector('.app-name')?.textContent || 'App';
+                const dynamicIsland = document.querySelector('.dynamic-island');
+                
+                dynamicIsland.style.width = '160px';
+                dynamicIsland.style.animation = 'pulse 0.8s infinite';
+                dynamicIsland.textContent = appName;
+                dynamicIsland.style.display = 'flex';
+                dynamicIsland.style.justifyContent = 'center';
+                dynamicIsland.style.alignItems = 'center';
+                dynamicIsland.style.fontSize = '14px';
+                dynamicIsland.style.fontWeight = '500';
+                
+                setTimeout(() => {
+                    dynamicIsland.textContent = '';
+                    dynamicIsland.style.width = '120px';
+                    dynamicIsland.style.animation = '';
+                    dynamicIsland.style.fontSize = '';
+                    dynamicIsland.style.fontWeight = '';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
